@@ -1,79 +1,37 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
+#include "shell.h"
 
-/** prompt - displays user prompt
-*	only terminates on signal calls
-*	exit()
-*	displays error and then prompt 
+/**
+* prompt - provides console prompt
 * Return: void
 */
 
 int prompt(void)
 {
-	pid_t child_pid, wt_pid;
-		
-	unsigned int i = 0;
-	int status;
-	ssize_t rd_Cmd;
-	char *str_Buffer;
-	size_t len;
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t read;
 
-	static char *exec_Args[] = {NULL};
-	char *prompt_dec = "zm_ssh:>-> ";
-	
-	
-	
-	str_Buffer = NULL;
-	len = 0;
-	
-	while (!i)
+	printf(":-> ");
+	while ((read = getline(&line, &len, stdin)) != -1)
 	{
-		write(1, prompt_dec, strlen(prompt_dec));
-		
-		
-		child_pid = fork(); /** create parallel process */
-		
-		if (child_pid == -1)
+		/**
+		* remove newline if it exists
+		* replace it with '\0'
+		* decrement count to exclude newline
+		*/
+		if (line[read - 1] == '\n')
 		{
-			/** checks if the process is created*/
-			perror("Error executing fork");
-			return (1);
+			line[read - 1] = '\0';
+			read--;
 		}
-		
-		if (child_pid == 0)
-		{
-			/** process to wait on */
-			rd_Cmd = getline(&str_Buffer, &len, stdin);
-			
-			if (rd_Cmd == -1)
-				perror("Getline");
-		}
-		else
-		{
-			/** Father process
-			* executes after value is read
-			*/
-			wt_pid = wait(&status);	
-			
-			if (wt_pid == -1)
-			{
-				perror("child process terminated");
-				return (1);
-			}
-			
-			/** change this path */
-			execve("/bin/ls", exec_Args, NULL);
-			perror("Confirm your working directory");
-			
-			
-		}
-		
-		if (strcmp(str_Buffer, "exit") == 0)
-			i = 1;
-		free(str_Buffer);
-	}	
+
+		if (strcmp(line, "exit") == 0)
+			break;
+
+		printf(":-> ");
+		_strtoken(line);
+	}
+
+	free(line);
 	return (0);
 }
