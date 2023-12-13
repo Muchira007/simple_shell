@@ -1,5 +1,7 @@
 #include "shell.h"
 
+void handleEoF(char *line);
+
 /**
 * prompt - provides console prompt
 * Return: void
@@ -11,9 +13,14 @@ int prompt(void)
 	size_t len = 0;
 	ssize_t read;
 
-	printf(":-> ");
-	while ((read = getline(&line, &len, stdin)) != -1)
+	while (1)
 	{
+		printf(":-> ");
+		read = getline(&line, &len, stdin);
+		if (read == -1)
+		{
+			handleEoF(line);
+		}
 		/**
 		* remove newline if it exists
 		* replace it with '\0'
@@ -28,10 +35,29 @@ int prompt(void)
 		if (strcmp(line, "exit") == 0)
 			break;
 
-		printf(":-> ");
 		_strtoken(line);
 	}
 
 	free(line);
 	return (0);
+}
+
+/**
+ * handleEoF - Handle the end-of-file condition.
+ * @line: The input line
+ */
+void handleEoF(char *line)
+{
+	if (feof(stdin))
+	{
+		printf("\n");
+		free(line);
+		return;
+	}
+	else
+	{
+		perror("error can' read script");
+		free(line);
+		exit(EXIT_FAILURE);
+	}
 }
