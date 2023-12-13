@@ -7,8 +7,12 @@
 
 int main(void)
 {
-
-	prompt();
-
+	while(1)
+	{
+		if(prompt() == 0)
+		{
+			break;
+		}
+	}
 	return (0);
 }
