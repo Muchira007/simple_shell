@@ -1,5 +1,7 @@
 #include "shell.h"
 
+void handleEoF(char *line);
+
 /**
 * prompt - provides console prompt
 * Return: void
@@ -17,19 +19,8 @@ int prompt(void)
 		read = getline(&line, &len, stdin);
 		if (read == -1)
 		{
-			if (feof(stdin))
-			{
-				printf("\n");
-				free(line);
-				return (0);
-			}
-			else
-			{
-			perror("error can' read script");
-			free(line);
-			exit(EXIT_FAILURE);
+			handleEoF(line);
 		}
-	}
 		/**
 		* remove newline if it exists
 		* replace it with '\0'
@@ -49,4 +40,24 @@ int prompt(void)
 
 	free(line);
 	return (0);
+}
+
+/**
+ * handleEoF - Handle the end-of-file condition.
+ * @line: The input line
+ */
+void handleEoF(char *line)
+{
+	if (feof(stdin))
+	{
+		printf("\n");
+		free(line);
+		return (0);
+	}
+	else
+	{
+		perror("error can' read script");
+		free(line);
+		exit(EXIT_FAILURE);
+	}
 }

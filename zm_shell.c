@@ -7,9 +7,9 @@
 
 int main(void)
 {
-	while(1)
+	while (1)
 	{
-		if(prompt() == 0)
+		if (prompt() == 0)
 		{
 			break;
 		}
