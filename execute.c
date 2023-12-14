@@ -5,7 +5,7 @@
 * @token: the executable (e.g ls)
 *	ls -la
 * @tokenArgs: the arguments (e.g -la)
-* @path: the path of the file
+* @fpath: the path of the file
 * Return: void
 */
 
@@ -30,10 +30,8 @@ void _execute(char *token, char *tokenArgs, char *fpath)
 		perror("Couldn't ran parallel processes");
 		exit(EXIT_FAILURE);
 	}
-
 	if (childPid == 0)
 	{
-		/* 1 */
 		char *envArgs[] = {NULL};
 		char **newArgs = malloc(sizeof(char *) * (2 + 1));
 

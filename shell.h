@@ -16,5 +16,6 @@ void _print(const char *composition);
 void _strtoken(char *line);
 void _execute(char *token, char *tokenArgs, char *fpath);
 void pathFinder(char *token);
+extern char **environ;
 
 #endif

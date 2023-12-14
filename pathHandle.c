@@ -1,16 +1,12 @@
 #include "shell.h"
-
 /**
  * pathFinder - reads the path
  * @token: ...
- * @tokenArgs: ...
- * @pathtkn: ...
  * end
  */
 
 void pathFinder(char *token)
 {
-	extern char **environ;
 	struct stat st;
 	char **env;
 	char *fpath = NULL;
@@ -18,7 +14,6 @@ void pathFinder(char *token)
 	char *tokenArgs = "default_value";
 
 	env = environ;
-	fpath = strdup(token);
 
 	if (stat(tokencpy, &st) == 0)
 	{
@@ -43,5 +38,5 @@ void pathFinder(char *token)
 		printf("acces graanted to you,%s\n", fpath);
 		return;
 	}
-	free(fpath);
+	free(tokencpy);
 }
