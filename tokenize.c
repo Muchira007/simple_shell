@@ -8,7 +8,7 @@
 
 void _strtoken(char *line)
 {
-	const char *del = "\n";
+	char *del;
 	char *token, *tokenArgs, *strCpy;
 	char *fpath = "/bin/";
 

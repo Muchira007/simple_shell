@@ -51,13 +51,16 @@ void handleEoF(char *line)
 	if (feof(stdin))
 	{
 		printf("\n");
-		free(line);
+		if (line != NULL)
+			free(line);
+		line = NULL;
 		return;
 	}
 	else
 	{
 		perror("error can' read script");
-		free(line);
+		if (line != NULL)
+			free(line);
 		exit(EXIT_FAILURE);
 	}
 }

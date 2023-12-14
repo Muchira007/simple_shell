@@ -20,7 +20,7 @@ void _execute(char *fpath, char *tokenArgs)
 	pid_t childPid;
 	int status, stNum;
 	char *_fpath;
-	char **newArgs = NULL;
+
 
 	_fpath = strdup(fpath);
 	childPid = fork();
@@ -47,6 +47,7 @@ void _execute(char *fpath, char *tokenArgs)
 
 		execve(_fpath, newArgs, envArgs);
 		perror("Command Execution Fail");
+		free(newArgs);
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -55,6 +56,6 @@ void _execute(char *fpath, char *tokenArgs)
 
 		if (stNum == -1)
 			perror("Error Terminating Child");
-		free(newArgs);
 	}
+	free(_fpath);
 }
