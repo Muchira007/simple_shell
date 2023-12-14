@@ -2,8 +2,6 @@
 
 /**
 * _execute - executes the set commands
-* @token: the executable (e.g ls)
-*	ls -la
 * @tokenArgs: the arguments (e.g -la)
 * @fpath: the path of the file
 * Return: void
@@ -43,13 +41,11 @@ void _execute(char *fpath, char *tokenArgs)
 			perror("Error allocating memory");
 			exit(EXIT_FAILURE);
 		}
-
 		newArgs[0] = _fpath;
 		newArgs[1] = tokenArgs;
 		newArgs[2] = NULL;
 
 		execve(_fpath, newArgs, envArgs);
-
 		perror("Command Execution Fail");
 		exit(EXIT_FAILURE);
 	}

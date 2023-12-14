@@ -14,7 +14,7 @@ int prompt(void);
 void comd_exec(char *str_Buffer, char *args[], int count);
 void _print(const char *composition);
 void _strtoken(char *line);
-void _execute(char *token, char *tokenArgs, char *fpath);
+void _execute(char *fpath, char *tokenArgs);
 void pathFinder(char *token);
 extern char **environ;
 

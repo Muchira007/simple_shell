@@ -11,7 +11,7 @@ void pathFinder(char *token)
 	char **env;
 	char *fpath = NULL;
 	char *tokencpy = strdup(token);
-	char *tokenArgs = "default_value";
+
 
 	env = environ;
 
@@ -32,11 +32,10 @@ void pathFinder(char *token)
 			env++;
 		}
 	}
-	if fpath != NULL && (access(fpath, X_OK) == 0)
+	if (fpath != NULL && (access(fpath, X_OK) == 0))
 	{
 		printf("Executable: %s\n", fpath);
-		_execute(fpath, tokenArgs);
-		
+		_execute(fpath, NULL);
 		free(fpath);
 		return;
 	}
