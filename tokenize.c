@@ -10,7 +10,7 @@ void _strtoken(char *line)
 {
 	const char *del = "\n";
 	char *token, *tokenArgs, *strCpy;
-	char *fpath = "default_path";
+	char *fpath = "/bin/";
 
 	del = " \n";
 
@@ -35,7 +35,7 @@ void _strtoken(char *line)
 		tokenArgs = strtok(NULL, del);
 		while (tokenArgs != NULL)
 		{
-			_execute(token, tokenArgs, fpath);
+			_execute(fpath, tokenArgs);
 			tokenArgs = strtok(NULL, del);
 		}
 

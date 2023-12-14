@@ -17,12 +17,14 @@
 * NULL indicaes termination of Array
 */
 
-void _execute(char *token, char *tokenArgs, char *fpath)
+void _execute(char *fpath, char *tokenArgs)
 {
 	pid_t childPid;
 	int status, stNum;
+	char *_fpath;
 	char **newArgs = NULL;
 
+	_fpath = strdup(fpath);
 	childPid = fork();
 
 	if (childPid == -1)
@@ -30,6 +32,7 @@ void _execute(char *token, char *tokenArgs, char *fpath)
 		perror("Couldn't ran parallel processes");
 		exit(EXIT_FAILURE);
 	}
+
 	if (childPid == 0)
 	{
 		char *envArgs[] = {NULL};
@@ -41,11 +44,11 @@ void _execute(char *token, char *tokenArgs, char *fpath)
 			exit(EXIT_FAILURE);
 		}
 
-		newArgs[0] = token;
+		newArgs[0] = _fpath;
 		newArgs[1] = tokenArgs;
 		newArgs[2] = NULL;
 
-		execve(fpath, newArgs, envArgs);
+		execve(_fpath, newArgs, envArgs);
 
 		perror("Command Execution Fail");
 		exit(EXIT_FAILURE);

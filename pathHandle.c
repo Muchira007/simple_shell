@@ -18,7 +18,7 @@ void pathFinder(char *token)
 	if (stat(tokencpy, &st) == 0)
 	{
 		printf("Found here:%s", tokencpy);
-		fpath = tokencpy;
+		fpath = strdup(tokencpy);
 	}
 	else
 	{
@@ -32,10 +32,12 @@ void pathFinder(char *token)
 			env++;
 		}
 	}
-	if (access(fpath, X_OK) == 0)
+	if fpath != NULL && (access(fpath, X_OK) == 0)
 	{
-		_execute(fpath, token, tokenArgs);
-		printf("acces graanted to you,%s\n", fpath);
+		printf("Executable: %s\n", fpath);
+		_execute(fpath, tokenArgs);
+		
+		free(fpath);
 		return;
 	}
 	free(tokencpy);
