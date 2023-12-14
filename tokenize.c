@@ -8,7 +8,9 @@
 
 void _strtoken(char *line)
 {
-	char *del, *token, *tokenArgs, *strCpy;
+	const char *del = "\n";
+	char *token, *tokenArgs, *strCpy;
+	char *fpath = "default_path";
 
 	del = " \n";
 
@@ -23,7 +25,7 @@ void _strtoken(char *line)
 
 	if (token != NULL)
 	{
-		_execute(token, NULL);
+		pathFinder(token);
 
 		/**
 		* continue to tokenize the string
@@ -33,7 +35,7 @@ void _strtoken(char *line)
 		tokenArgs = strtok(NULL, del);
 		while (tokenArgs != NULL)
 		{
-			_execute(token, tokenArgs);
+			_execute(token, tokenArgs, fpath);
 			tokenArgs = strtok(NULL, del);
 		}
 

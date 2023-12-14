@@ -5,6 +5,7 @@
 * @token: the executable (e.g ls)
 *	ls -la
 * @tokenArgs: the arguments (e.g -la)
+* @path: the path of the file
 * Return: void
 */
 
@@ -16,10 +17,11 @@
 * NULL indicaes termination of Array
 */
 
-void _execute(char *token, char *tokenArgs)
+void _execute(char *token, char *tokenArgs, char *fpath)
 {
 	pid_t childPid;
 	int status, stNum;
+	char **newArgs = NULL;
 
 	childPid = fork();
 
@@ -45,11 +47,10 @@ void _execute(char *token, char *tokenArgs)
 		newArgs[1] = tokenArgs;
 		newArgs[2] = NULL;
 
-		execve(token, newArgs, envArgs);
+		execve(fpath, newArgs, envArgs);
 
 		perror("Command Execution Fail");
 		exit(EXIT_FAILURE);
-		free(newArgs);
 	}
 	else
 	{
@@ -57,5 +58,6 @@ void _execute(char *token, char *tokenArgs)
 
 		if (stNum == -1)
 			perror("Error Terminating Child");
+		free(newArgs);
 	}
 }
