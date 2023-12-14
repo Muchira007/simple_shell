@@ -16,25 +16,18 @@ void pathFinder(char *token)
 	env = environ;
 
 	if (stat(tokencpy, &st) == 0)
-	{
-		printf("Found here:%s", tokencpy);
 		fpath = strdup(tokencpy);
-	}
 	else
 	{
 		while (*env != NULL)
 		{
 			if (strstr(*env, tokencpy))
-			{
-				printf("found here: %s", *env);
 				fpath = *env;
-			}
 			env++;
 		}
 	}
 	if (fpath != NULL && (access(fpath, X_OK) == 0))
 	{
-		printf("Executable: %s\n", fpath);
 		_execute(fpath, NULL);
 		free(fpath);
 		return;
