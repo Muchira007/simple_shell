@@ -34,20 +34,14 @@ void _execute(char *fpath, char *tokenArgs)
 	if (childPid == 0)
 	{
 		char *envArgs[] = {NULL};
-		char **newArgs = malloc(sizeof(char *) * (2 + 1));
+		char **newArgs = {NULL};
 
-		if (newArgs == NULL)
-		{
-			perror("Error allocating memory");
-			exit(EXIT_FAILURE);
-		}
 		newArgs[0] = _fpath;
 		newArgs[1] = tokenArgs;
 		newArgs[2] = NULL;
 
 		execve(_fpath, newArgs, envArgs);
 		perror("Command Execution Fail");
-		free(newArgs);
 		exit(EXIT_FAILURE);
 	}
 	else

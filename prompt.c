@@ -21,16 +21,6 @@ int prompt(void)
 		{
 			handleEoF(line);
 		}
-		/**
-		* remove newline if it exists
-		* replace it with '\0'
-		* decrement count to exclude newline
-		*/
-		if (line[read - 1] == '\n')
-		{
-			line[read - 1] = '\0';
-			read--;
-		}
 
 		if (strcmp(line, "exit") == 0)
 			break;
