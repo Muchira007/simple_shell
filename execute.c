@@ -40,7 +40,7 @@ void _execute(char *fpath, char *tokenArgs)
 		newArgs[1] = tokenArgs;
 		newArgs[2] = NULL;
 
-		execve(_fpath, newArgs, envArgs);
+		execve(newArgs[0], newArgs, envArgs);
 		perror("Command Execution Fail");
 		exit(EXIT_FAILURE);
 	}

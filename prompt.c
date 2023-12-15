@@ -22,7 +22,7 @@ int prompt(void)
 			handleEoF(line);
 		}
 
-		if (strcmp(line, "exit") == 0)
+		if (strcmp(line, "exit\n") == 0)
 			break;
 
 		_strtoken(line);

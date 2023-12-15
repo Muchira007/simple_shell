@@ -12,25 +12,39 @@ void pathFinder(char *token)
 	char *fpath = NULL;
 	char *tokencpy = strdup(token);
 
-
 	env = environ;
-
 	if (stat(tokencpy, &st) == 0)
 		fpath = strdup(tokencpy);
 	else
 	{
 		while (*env != NULL)
 		{
-			if (strstr(*env, tokencpy))
-				fpath = *env;
+			fpath = malloc(strlen(*env) + strlen("/") + strlen(tokencpy) + 1);
+			if (fpath == NULL)
+			{
+				perror("Memory allocation failed");
+				exit(EXIT_FAILURE);
+			}
+
+			strcpy(fpath, *env);
+			strcat(fpath, "/");
+			strcat(fpath, tokencpy);
+			if (access(fpath, X_OK) == 0)
+			{
+				break;
+			}
+			else
+			{
+				free(fpath);
+				fpath = NULL;
+			}
 			env++;
 		}
 	}
-	if (fpath != NULL && (access(fpath, X_OK) == 0))
+	if (fpath != NULL)
 	{
 		_execute(fpath, NULL);
 		free(fpath);
-		return;
 	}
 	free(tokencpy);
 }

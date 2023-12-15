@@ -10,7 +10,7 @@ void _strtoken(char *line)
 {
 	const char *del = " \n";
 	char *token, *tokenArgs, *strCpy;
-	char *fpath = "/bin/";
+	char *fpath = NULL;
 
 	strCpy = strdup(line);
 
@@ -36,12 +36,8 @@ void _strtoken(char *line)
 			_execute(fpath, tokenArgs);
 			tokenArgs = strtok(NULL, del);
 		}
-
-		free(strCpy);
 	}
 	else
-	{
-		free(strCpy);
 		perror("invalid command");
-	}
+	free(strCpy);
 }
